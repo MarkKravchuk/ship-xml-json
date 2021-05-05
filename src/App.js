@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ShipForm from "./components/shipForm";
 import xml from 'xml'
 import convert from 'xml-js'
+import readXlsxFile from 'read-excel-file'
 
 class App extends React.Component {
 
@@ -42,7 +43,9 @@ class App extends React.Component {
         this.setState({xml: xmlValue})
     }
 
+
     render() {
+
         console.log('state: ', this.state);
         return (<>
                 <div className={'main-wrapper'}>
@@ -51,7 +54,8 @@ class App extends React.Component {
                         <ShipForm ship={this.state.ship}
                                   change={this.onChange}
                                   submit={this.onSubmit}
-                                  uploadFile={this.uploadFile}/>
+                                  uploadFile={this.uploadFile}
+                                  uploadXLS={this.uploadXLS}/>
                     </div>
 
                     {this.state.xml ? <div className={'xml-wrapper'}>
@@ -69,6 +73,25 @@ class App extends React.Component {
         );
     }
 
+    uploadXLS= () =>{
+        let file = document.getElementById("xls");
+        console.log("xls ",file);
+
+
+            readXlsxFile(file.files[0]).then((rows) => {
+                // `rows` is an array of rows
+                // each row being an array of cells.
+                let ship = rows[1];
+                let name = ship[0];
+                let departure = ship[1];
+                let crewSize = ship[2];
+                let bribe = ship[3];
+                this.setState({ship: {
+                        name, departure, crewSize, bribe
+                    }})
+
+            }).then(console.log("finish"))
+    }
     uploadFile = () => {
         let file = document.getElementById("file").files[0];
 

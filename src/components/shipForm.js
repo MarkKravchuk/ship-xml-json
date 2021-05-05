@@ -5,7 +5,7 @@ export default class ShipForm extends React.Component {
 
     render() {
         console.log('shipForm props:', this.props);
-        let {change, uploadFile, ship} = this.props;
+        let {change, uploadFile, ship,uploadXLS} = this.props;
 
         let {name, departure, crewSize, bribe} = ship;
 
@@ -33,6 +33,9 @@ export default class ShipForm extends React.Component {
 
             <input type="file" name="file" id="file"/>
             <button onClick={uploadFile} name="submit">Upload File</button>
+
+            <input type="file" name="xls" id="xls"/>
+            <button onClick={uploadXLS} name="submit">Upload XLS</button>
 
             </>
     }
