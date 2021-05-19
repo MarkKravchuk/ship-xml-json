@@ -99,10 +99,14 @@ class App extends React.Component {
 
 
 
+
         var reader = new FileReader();
         reader.onload = (() => {
             return (e) => {
                 let fileContent = e.target.result;
+                let XMLParser = require('react-xml-parser');
+                let xml = new XMLParser().parseFromString(fileContent);
+                console.log("Ship name ", xml.getElementsByTagName('name')[0].value);
 
                 let json = JSON.parse(convert.xml2json(fileContent));
                 console.log('json: ', json)
